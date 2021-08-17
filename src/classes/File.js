@@ -10,6 +10,8 @@ class File {
     this.createdAt = data?.createdAt ?? null
     this.updatedAt = data?.updatedAt ?? data?.createdAt ?? null
 
+    if (this.createdAt) this.createdAt = new Date(this.createdAt)
+    if (this.updatedAt) this.updatedAt = new Date(this.updatedAt)
   }
 
 }
