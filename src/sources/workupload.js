@@ -1,6 +1,6 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { default: convertSize } = require('convert-size')
+const { sizeToBytes } = require('../utils')
 
 const File = require('../classes/File')
 

@@ -1,3 +1,5 @@
+const { convertFileSize } = require('size-converter')
+
 // <protocol>://<user>:<pass>@<ip>:<port>
 exports.proxyToAxios = string => {
   if (!string) return false
@@ -27,4 +29,10 @@ exports.proxyToAxios = string => {
       password
     }
   }
+}
+
+exports.sizeToBytes = string => {
+  const { number } = convertFileSize(string, 'bytes', 1000)
+
+  return number
 }

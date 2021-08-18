@@ -1,6 +1,6 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { default: convertSize } = require('convert-size')
+const { sizeToBytes } = require('../utils')
 
 const File = require('../classes/File')
 
@@ -25,7 +25,7 @@ exports.get = async (url, proxy) => {
     const el = $('#lrbox .left').first()
 
     const file = el.find('font').eq(2).text()
-    const size = convertSize(el.find('font').eq(4).text(), 'B')
+    const size = sizeToBytes(el.find('font').eq(4).text())
     const createdAt = el.find('font').eq(6).text()
 
     return [

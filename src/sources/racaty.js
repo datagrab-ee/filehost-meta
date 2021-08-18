@@ -1,6 +1,6 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { default: convertSize } = require('convert-size')
+const { sizeToBytes } = require('../utils')
 
 const File = require('../classes/File')
 
@@ -22,7 +22,7 @@ exports.get = async (url, proxy) => {
     const el = $('.fileinf-o .name').first()
 
     const file = el.find('strong').first().text().trim()
-    const size = convertSize(el.find('#rctyFsize').first().text(), 'B')
+    const size = sizeToBytes(el.find('#rctyFsize').first().text())
     const createdAt = el.find('span').first().text().split(' ').pop()
 
     return [

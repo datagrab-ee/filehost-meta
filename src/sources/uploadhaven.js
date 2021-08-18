@@ -1,6 +1,6 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { default: convertSize } = require('convert-size')
+const { sizeToBytes } = require('../utils')
 
 const File = require('../classes/File')
 
@@ -27,7 +27,7 @@ exports.get = async (url, proxy) => {
     let [file, size] = meta.split(/\r?\n/).filter(x => x.trim())
 
     file = file.split(':').pop().trim()
-    size = convertSize(size.split(':').pop().trim(), 'B')
+    size = sizeToBytes(size.split(':').pop().trim())
 
     return [
       new File({
