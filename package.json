@@ -2,6 +2,15 @@
   "name": "filehost-meta",
   "version": "1.0.0",
   "description": "Fetch basic file information from download links",
+  "keywords": [
+    "filehost",
+    "filename",
+    "filesize",
+    "mega",
+    "google drive",
+    "mediafire",
+    "zippyshare"
+  ],
   "main": "index.js",
   "engines": {
     "node": ">=15.0.0"
@@ -10,6 +19,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kristjan Kirpu <hello@pepzwee.com> (https://pepzwee.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/datagrab-ee/filehost-meta.git"
+  },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",

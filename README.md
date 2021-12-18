@@ -1,3 +1,5 @@
+[![https://nodei.co/npm/filehost-meta.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/filehost-meta.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/filehost-meta)
+
 # filehost-meta
 
 Fetch basic file information from a download link.
