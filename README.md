@@ -7,7 +7,7 @@ Fetch basic file information from a download link.
 ## Example
 
 ```js
-const getFileInfo = require('./index')
+const getFileInfo = require('filehost-meta')
 
 getFileInfo('DOWNLOAD_LINK')
   .then(data => {
