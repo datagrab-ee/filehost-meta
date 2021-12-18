@@ -4,6 +4,8 @@ const File = require('../classes/File')
 
 const { proxyToAxios } = require('../utils')
 
+exports.domains = ['pixeldrain.com']
+
 exports.get = async (url, proxy) => {
   try {
     const id = url.split('/').pop()

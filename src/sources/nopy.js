@@ -5,6 +5,8 @@ const File = require('../classes/File')
 
 const { proxyToAxios } = require('../utils')
 
+exports.domains = ['nopy.to', 'nopyright.com']
+
 exports.get = async (url, proxy) => {
   try {
     const [code, file] = url.split('/').slice(-2)

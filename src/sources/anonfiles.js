@@ -4,6 +4,8 @@ const File = require('../classes/File')
 
 const { proxyToAxios } = require('../utils')
 
+exports.domains = ['anonfile.com', 'anonfiles.com']
+
 exports.get = async (url, proxy) => {
   try {
     const [a, b, c, id] = url.split('/')

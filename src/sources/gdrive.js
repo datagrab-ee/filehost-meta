@@ -4,6 +4,8 @@ const File = require('../classes/File')
 
 const { proxyToAxios } = require('../utils')
 
+exports.domains = ['drive.google.com']
+
 exports.get = async (url, proxy) => {
   try {
     if (!process.env.GOOGLE_KEY) {

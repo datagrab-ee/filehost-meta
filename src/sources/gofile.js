@@ -5,15 +5,22 @@ const File = require('../classes/File')
 
 const { proxyToAxios } = require('../utils')
 
+exports.domains = ['gofile.io']
+
 exports.get = async (url, proxy) => {
   try {
-    const folderId = url.split('/d/').pop()
+    if (!process.env.GOFILE_KEY) {
+      throw new Error('Missing env variable "GOFILE_KEY" for Gofile API')
+    }
+
+    const contentId = url.split('/d/').pop()
     
     const res = await axios({
       method: 'get',
-      url: 'https://api.gofile.io/getFolder',
+      url: 'https://api.gofile.io/getContent',
       params: {
-        folderId
+        contentId,
+        token: process.env.GOFILE_KEY
       },
       proxy: proxyToAxios(proxy)
     })

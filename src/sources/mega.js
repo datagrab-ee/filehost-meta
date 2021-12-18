@@ -2,6 +2,8 @@ const File = require('../classes/File')
 
 const megajs = require('megajs')
 
+exports.domains = ['mega.nz', 'mega.co.nz']
+
 exports.get = (url, proxy) => {
   return new Promise((resolve, reject) => {
     try {

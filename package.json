@@ -1,17 +1,21 @@
 {
   "name": "filehost-meta",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fetch basic file information from download links",
   "main": "index.js",
+  "engines": {
+    "node": ">=15.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Kristjan Kirpu <hello@pepzwee.com> (https://pepzwee.com)",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.10",
     "megajs": "^0.17.2",
+    "require-dir": "^1.2.0",
     "size-converter": "^1.0.1"
   }
 }
