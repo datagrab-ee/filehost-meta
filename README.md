@@ -1,4 +1,4 @@
-[![https://nodei.co/npm/filehost-meta.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/filehost-meta.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/filehost-meta)
+[![https://img.shields.io/npm/v/filehost-meta](https://img.shields.io/npm/v/filehost-meta)](https://www.npmjs.com/package/filehost-meta) [![https://img.shields.io/npm/dw/filehost-meta](https://img.shields.io/npm/dw/filehost-meta)](https://www.npmjs.com/package/filehost-meta)
 
 # filehost-meta
 
