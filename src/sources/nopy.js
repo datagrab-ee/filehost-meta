@@ -39,8 +39,6 @@ exports.get = async (url, proxy) => {
       })
     ]
   } catch (err) {
-    console.error(err)
-
     throw err
   }
 }

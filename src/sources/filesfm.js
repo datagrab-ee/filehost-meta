@@ -51,8 +51,6 @@ exports.get = async (url, proxy) => {
 
     return files
   } catch (err) {
-    console.error(err)
-
     throw err
   }
 }

@@ -44,8 +44,6 @@ exports.get = async (url, proxy) => {
         createdAt
       }))
   } catch (err) {
-    console.error(err)
-
     throw err
   }
 }
