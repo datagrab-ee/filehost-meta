@@ -6,7 +6,7 @@ const File = require('../classes/File')
 
 const { proxyToAxios } = require('../utils')
 
-exports.domains = ['racaty.com']
+exports.domains = ['racaty.com', 'racaty.net']
 
 exports.get = async (url, proxy) => {
   try {
