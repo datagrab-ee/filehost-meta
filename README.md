@@ -4,15 +4,25 @@
 
 Fetch basic file information from a download link.
 
-## Example
+## Usage
 
 ```js
-const getFileInfo = require('filehost-meta')
+const { getSources, getInfo } = require('filehost-meta')
 
-getFileInfo('DOWNLOAD_LINK')
-  .then(data => {
-    // name, size, views, downloads, createdAt, updatedAt
-  })
+// Get all supported sources
+// Returns an array of hostnames
+const sources = getSources()
+
+// Get file information from page without proxy
+// Returns a File class object { name, size, views, downloads, createdAt, updatedAt }
+getInfo(url)
+  .then(data => {})
+  .catch(console.error)
+
+// Get file information from page with a HTTP proxy (http://<user>:<pass>@<ip>:<port>)
+// Returns a File class object { name, size, views, downloads, createdAt, updatedAt }
+getInfo(url, { proxy })
+  .then(data => {})
   .catch(console.error)
 ```
 

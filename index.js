@@ -1,6 +1,10 @@
 const sources = require('./src/sources')
 
-module.exports = async function getInfo(url, options = {}) {
+exports.getSources = function allSources() {
+  return Object.values(sources).map(source => source.domains).flatMap(x => x)
+}
+
+exports.getInfo = async function getInfo(url, options = {}) {
   const { hostname } = new URL(url)
 
   for (const { domains, get } of Object.values(sources)) {
