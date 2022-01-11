@@ -18,7 +18,7 @@ exports.get = async (url, proxy) => {
         code,
         file,
       }),
-      proxy: proxyToAxios(proxy)
+      ...proxyToAxios(proxy)
     })
 
     if (res.status !== 200) {

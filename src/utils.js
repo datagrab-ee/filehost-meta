@@ -1,37 +1,15 @@
+const { HttpProxyAgent } = require('http-proxy-agent')
+const { HttpsProxyAgent } = require('https-proxy-agent')
 const { convertFileSize } = require('size-converter')
 
 // <protocol>://<user>:<pass>@<ip>:<port>
 exports.proxyToAxios = string => {
-  if (!string) return false
+  if (!string) return {}
 
-  const [protocol, proxy] = string.split('://')
-  const [creds, addr] = proxy.split('@')
-
-  if (creds && addr) {
-    const [username, password] = creds.split(':')
-    const [host, port] = addr.split(':')
-
-    return {
-      protocol,
-      host,
-      port,
-      auth: {
-        username,
-        password
-      }
-    }
-  }
-
-  const [host, port] = creds.split(':')
-  
   return {
-    protocol,
-    host,
-    port,
-    auth: {
-      username,
-      password
-    }
+    httpAgent: new HttpProxyAgent(string),
+    httpsAgent: new HttpsProxyAgent(string),
+    proxy: false
   }
 }
 

@@ -12,7 +12,7 @@ exports.get = async (url, proxy) => {
 
     const res = await axios({
       url: `https://pixeldrain.com/api/file/${id}/info`,
-      proxy: proxyToAxios(proxy)
+      ...proxyToAxios(proxy)
     })
 
     if (res.status !== 200) {

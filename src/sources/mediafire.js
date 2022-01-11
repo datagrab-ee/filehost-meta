@@ -14,7 +14,7 @@ exports.domains = ['mediafire.com']
 async function checkLinkResponseType (url, proxy) {
   const { headers } = await axios({
     url,
-    proxy: proxyToAxios(proxy),
+    ...proxyToAxios(proxy),
     method: 'head'
   })
 
@@ -33,7 +33,7 @@ exports.get = async (url, proxy) => {
 
     const res = await axios({
       url,
-      proxy: proxyToAxios(proxy)
+      ...proxyToAxios(proxy)
     })
 
     // NOTE: mediafire does a 302 redirect if file does not exist

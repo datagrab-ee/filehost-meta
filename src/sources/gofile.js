@@ -22,7 +22,7 @@ exports.get = async (url, proxy) => {
         contentId,
         token: process.env.GOFILE_KEY
       },
-      proxy: proxyToAxios(proxy)
+      ...proxyToAxios(proxy)
     })
 
     if (res.status !== 200) {

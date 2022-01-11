@@ -12,7 +12,7 @@ exports.get = async (url, proxy) => {
   try {
     const res = await axios({
       url,
-      proxy: proxyToAxios(proxy)
+      ...proxyToAxios(proxy)
     })
 
     if (res.status !== 200) {

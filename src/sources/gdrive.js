@@ -29,7 +29,7 @@ exports.get = async (url, proxy) => {
         fields: 'name,size,createdTime,modifiedTime',
         key: process.env.GOOGLE_KEY
       },
-      proxy: proxyToAxios(proxy)
+      ...proxyToAxios(proxy)
     })
 
     if (res.status !== 200) {
