@@ -50,6 +50,8 @@ getInfo(url, { proxy })
 - [ ] Terminal.lc
 - [ ] Dropbox
 - [ ] Wetransfer
+- [ ] Megaup.net
+- [ ] Transfer.sh
 
 ## Contributing
 

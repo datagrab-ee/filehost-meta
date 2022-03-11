@@ -19,7 +19,7 @@ exports.get = async (url, proxy) => {
       throw new Error(res.statusText)
     }
 
-    if (res.data?.indexOf('we are sorry') !== -1) {
+    if (res.data?.toLowerCase()?.indexOf('we are sorry') !== -1) {
       throw new Error('Response returned bad status')
     }
     
