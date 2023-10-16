@@ -22,13 +22,12 @@ exports.get = async (url, proxy) => {
     if (res.data?.indexOf('file does not exist') !== -1) {
       throw new Error('Response returned bad status')
     }
-    
-    const scriptMetaBody = res.data.split("body: '")[1].split("',")[0]
 
-    const $ = cheerio.load(scriptMetaBody)
+    const $ = cheerio.load(res.data)
+    const el = $('#notice table')
 
-    const file = $('td').eq(1).text()
-    const size = $('td').eq(3).text().split(' ')[0]
+    const file = el.find('td').eq(1).text()
+    const size = el.find('td').eq(3).text().split(' ')[0]
 
     return [
       new File({
