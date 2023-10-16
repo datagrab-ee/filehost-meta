@@ -30,6 +30,7 @@
     "http-proxy-agent": "^7.0.0",
     "https-proxy-agent": "^7.0.2",
     "megajs": "^1.1.4",
+    "qs": "^6.11.2",
     "require-dir": "^1.2.0",
     "size-converter": "^1.0.1"
   },
