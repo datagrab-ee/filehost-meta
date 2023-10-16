@@ -26,7 +26,7 @@ exports.get = async (url, proxy) => {
     const $ = cheerio.load(res.data)
     const el = $('.tbl-c.c-l.title').first()
 
-    const file = el.find('span').text().trim()
+    const file = el.find('[title]').text().trim()
     const size = sizeToBytes(el.clone().children().remove().end().text().trim())
 
     return [
