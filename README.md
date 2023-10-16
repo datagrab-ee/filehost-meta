@@ -28,7 +28,7 @@ getInfo(url, { proxy })
 
 ## Supported Hosts
 
-- ~~Anonfiles~~ (shut down)
+- Dropmefiles
 - Files.fm
 - Google Drive - *requires API key in env* - `GOOGLE_KEY`
 - Gofile - *requires API key in env* - `GOFILE_KEY`
@@ -37,21 +37,26 @@ getInfo(url, { proxy })
 - Mixdrop
 - Pixeldrain
 - Racaty
+- Terminal.lc
+- Transfer.sh
 - Uploadhaven
 - Workupload
-- Zippyshare
+
+### RIP 🥀
+
+- ~~Anonfiles~~ (shut down)
+- ~~Zippyshare~~ (shut down)
+- ~~Nopy~~ (shut down)
 
 ## TODO
 
-- [ ] Dropmefiles.com
+- [x] Dropmefiles.com
 - [ ] Up2sha.re
-- [ ] Letsupload.io
-- [ ] Teknik.io
-- [ ] Terminal.lc
+- [x] Terminal.lc
 - [ ] Dropbox
 - [ ] Wetransfer
 - [ ] Megaup.net
-- [ ] Transfer.sh
+- [x] Transfer.sh
 
 ## Contributing
 
