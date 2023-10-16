@@ -28,7 +28,7 @@ getInfo(url, { proxy })
 
 ## Supported Hosts
 
-- Anonfiles
+- ~~Anonfiles~~ (shut down)
 - Files.fm
 - Google Drive - *requires API key in env* - `GOOGLE_KEY`
 - Gofile - *requires API key in env* - `GOFILE_KEY`
