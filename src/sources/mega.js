@@ -1,6 +1,8 @@
 const File = require('../classes/File')
 
 const megajs = require('megajs')
+const { HttpProxyAgent } = require('http-proxy-agent')
+const { HttpsProxyAgent } = require('https-proxy-agent')
 
 exports.domains = ['mega.nz', 'mega.co.nz']
 
@@ -9,7 +11,10 @@ exports.get = (url, proxy) => {
     try {
       const mega = megajs.File.fromURL(url)
 
-      mega.api.requestModule = mega.api.requestModule.defaults({ proxy })
+      if (proxy) {
+        mega.api.httpAgent = new HttpProxyAgent(proxy)
+        mega.api.httpsAgent = new HttpsProxyAgent(proxy)
+      }
 
       mega.loadAttributes((err, file) => {
         if (err) return reject(err)
