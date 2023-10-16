@@ -13,7 +13,7 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=15.0.0"
+    "node": ">=16.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,12 +25,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.1",
-    "cheerio": "^1.0.0-rc.10",
-    "http-proxy-agent": "^5.0.0",
-    "https-proxy-agent": "^5.0.0",
-    "megajs": "^0.17.2",
+    "axios": "^1.5.1",
+    "cheerio": "^1.0.0-rc.12",
+    "http-proxy-agent": "^7.0.0",
+    "https-proxy-agent": "^7.0.2",
+    "megajs": "^1.1.4",
     "require-dir": "^1.2.0",
     "size-converter": "^1.0.1"
+  },
+  "volta": {
+    "node": "16.20.2"
   }
 }
