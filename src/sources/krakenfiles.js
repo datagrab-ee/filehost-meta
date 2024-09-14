@@ -22,7 +22,7 @@ exports.get = async (url, proxy) => {
     const $ = cheerio.load(res.data)
 
     const name = $('.coin-name').first().text()
-    const size = sizeToBytes($('.general-information .lead-text').eq(2).text())
+    const size = sizeToBytes($('.general-information .lead-text').eq(2).text().replaceAll(',', ''))
     const views = Number($('.views-count').eq(1).text().replace(/[\r\n]/g, ''))
     const downloads = Number($('.downloads-count').eq(1).text().replace(/[\r\n]/g, ''))
 
