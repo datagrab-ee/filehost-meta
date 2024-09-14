@@ -17,9 +17,8 @@ exports.get = async (url, proxy) => {
     
     const res = await axios({
       method: 'get',
-      url: 'https://api.gofile.io/getContent',
+      url: `https://api.gofile.io/contents/${contentId}`,
       params: {
-        contentId,
         token: process.env.GOFILE_KEY
       },
       ...proxyToAxios(proxy)
@@ -36,7 +35,7 @@ exports.get = async (url, proxy) => {
     const { data } = res.data
     const createdAt = data.createTime * 1000
     
-    return Object.values(data.contents)
+    return Object.values(data.children)
       .map(({ name, size, downloadCount }) => new File({
         name,
         size,
