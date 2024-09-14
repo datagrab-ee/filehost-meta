@@ -1,6 +1,6 @@
 {
   "name": "filehost-meta",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Fetch basic file information from download links",
   "keywords": [
     "filehost",
