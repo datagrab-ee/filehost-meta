@@ -1,10 +1,15 @@
 const puppeteer = require('puppeteer')
 const File = require('../classes/File')
 
+const { proxyToPuppeteer } = require('../utils')
+
 exports.domains = ['workupload.com']
 
 exports.get = async (url, proxy) => {
   let browser
+
+  const pupProxy = proxyToPuppeteer(proxy)
+
   try {
     // Launch Puppeteer browser with proxy settings if provided
     browser = await puppeteer.launch({
@@ -12,11 +17,16 @@ exports.get = async (url, proxy) => {
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
-        ...proxy ? [`--proxy-server=${proxy}`] : []
+        ...pupProxy ? [`--proxy-server=${pupProxy.ip}:${pupProxy.port}`] : []
       ]
     })
 
     const page = await browser.newPage()
+
+    // proxy authentication if necessary
+    if (pupProxy.username || pupProxy.password) {
+      await page.authenticate({ username: pupProxy.username, password: pupProxy.password })
+    }
 
     // Go to the specified URL
     await page.goto(url, { waitUntil: 'networkidle2' })

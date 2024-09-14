@@ -13,6 +13,24 @@ exports.proxyToAxios = string => {
   }
 }
 
+exports.proxyToPuppeteer = string => {
+  if (!string) return {}
+
+  const proxyUrl = string.replace('http://', '').replace('https://', '')
+  const [auth, host] = proxyUrl.split('@')
+
+  const [username, password] = auth.split(':')
+  const [ip, port] = host.split(':')
+
+  return {
+    username,
+    password,
+    ip,
+    port
+  }
+}
+
+
 exports.sizeToBytes = string => {
   const { number } = convertFileSize(string, 'bytes', 1000)
 
