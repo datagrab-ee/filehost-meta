@@ -34,6 +34,7 @@
     "http-proxy-agent": "^7.0.0",
     "https-proxy-agent": "^7.0.2",
     "megajs": "^1.1.4",
+    "puppeteer": "^23.3.0",
     "qs": "^6.11.2",
     "require-dir": "^1.2.0",
     "size-converter": "^1.0.1"
