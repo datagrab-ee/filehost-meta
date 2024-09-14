@@ -32,13 +32,11 @@ getInfo(url, { proxy })
 - Files.fm
 - Google Drive - *requires API key in env* - `GOOGLE_KEY`
 - Gofile - *requires API key in env* - `GOFILE_KEY`
+- KrakenFiles
 - Mediafire
 - Mega
 - Mixdrop
 - Pixeldrain
-- Racaty
-- Terminal.lc
-- Transfer.sh
 - Uploadhaven
 - Workupload
 
@@ -47,16 +45,19 @@ getInfo(url, { proxy })
 - ~~Anonfiles~~ (shut down)
 - ~~Zippyshare~~ (shut down)
 - ~~Nopy~~ (shut down)
+- ~~Racaty~~ (shut down)
+- ~~Terminal.lc~~ (seems to be dead)
+
+## Unsure
+I can't resolve this domain, it seems to be operational but not on my PC.
+- ~~Transfer.sh~~ (aggressive firewall?)
 
 ## TODO
 
-- [x] Dropmefiles.com
 - [ ] Up2sha.re
-- [x] Terminal.lc
 - [ ] Dropbox
 - [ ] Wetransfer
 - [ ] Megaup.net
-- [x] Transfer.sh
 
 ## Contributing
 
