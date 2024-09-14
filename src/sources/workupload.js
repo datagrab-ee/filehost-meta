@@ -9,7 +9,11 @@ exports.get = async (url, proxy) => {
     // Launch Puppeteer browser with proxy settings if provided
     browser = await puppeteer.launch({
       headless: true,
-      args: proxy ? [`--proxy-server=${proxy}`] : [],
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        ...proxy ? [`--proxy-server=${proxy}`] : []
+      ]
     })
 
     const page = await browser.newPage()
