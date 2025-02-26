@@ -17,7 +17,7 @@ exports.get = async (url, proxy) => {
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
-        ...pupProxy ? [`--proxy-server=${pupProxy.ip}:${pupProxy.port}`] : []
+        ...pupProxy && pupProxy.ip ? [`--proxy-server=${pupProxy.ip}:${pupProxy.port}`] : []
       ]
     })
 
