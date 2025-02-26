@@ -37,6 +37,7 @@ getInfo(url, { proxy })
 - Mega
 - Mixdrop
 - Pixeldrain
+- Terminal.lc
 - Uploadhaven
 - Workupload
 
@@ -46,11 +47,7 @@ getInfo(url, { proxy })
 - ~~Zippyshare~~ (shut down)
 - ~~Nopy~~ (shut down)
 - ~~Racaty~~ (shut down)
-- ~~Terminal.lc~~ (seems to be dead)
-
-## Unsure
-I can't resolve this domain, it seems to be operational but not on my PC.
-- ~~Transfer.sh~~ (aggressive firewall?)
+- ~~Transfer.sh~~ (shut down)
 
 ## TODO
 

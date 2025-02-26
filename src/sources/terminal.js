@@ -12,7 +12,7 @@ exports.get = async (url, proxy) => {
 
     const res = await axios({
       method: 'post',
-      url: `https://fetch.terminal.lc`,
+      url: `https://terminal.lc/data`,
       data: {
         type: 'file',
         file: id,
