@@ -30,6 +30,7 @@ getInfo(url, { proxy })
 
 - Dropmefiles
 - Files.fm
+- Filesadmin
 - Google Drive - *requires API key in env* - `GOOGLE_KEY`
 - Gofile - *requires API key in env* - `GOFILE_KEY`
 - KrakenFiles
