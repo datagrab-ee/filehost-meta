@@ -1,43 +1,34 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { sizeToBytes } = require('../utils')
 
 const File = require('../classes/File')
-
-const { proxyToAxios } = require('../utils')
+const { proxyToAxios, sizeToBytes } = require('../utils')
 
 exports.domains = ['uploadhaven.com']
 
 exports.get = async (url, proxy) => {
-  try {
-    const res = await axios({
-      url,
-      ...proxyToAxios(proxy)
-    })
+  const res = await axios({
+    url,
+    ...proxyToAxios(proxy)
+  })
 
-    if (res.status !== 200) {
-      throw new Error(res.statusText)
-    }
-
-    if (res.data?.indexOf('download could not be found') !== -1) {
-      throw new Error('Response returned bad status')
-    }
-    
-    const $ = cheerio.load(res.data)
-    const meta = $('.responsiveInfoTable').first().text()
-
-    let [file, size] = meta.split(/\r?\n/).filter(x => x.trim())
-
-    file = file.split(':').pop().trim()
-    size = sizeToBytes(size.split(':').pop().trim())
-
-    return [
-      new File({
-        name: file,
-        size: size,
-      })
-    ]
-  } catch (err) {
-    throw err
+  if (res.status !== 200) {
+    throw new Error(res.statusText)
   }
+
+  if (res.data?.includes('download could not be found')) {
+    throw new Error('Download could not be found')
+  }
+
+  const $ = cheerio.load(res.data)
+  const meta = $('.responsiveInfoTable').first().text()
+
+  const [rawName, rawSize] = meta.split(/\r?\n/).filter(x => x.trim())
+
+  const name = rawName.split(':').pop().trim()
+  const size = sizeToBytes(rawSize.split(':').pop().trim())
+
+  return [
+    new File({ name, size })
+  ]
 }

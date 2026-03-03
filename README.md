@@ -9,46 +9,84 @@ Fetch basic file information from a download link.
 ```js
 const { getSources, getInfo } = require('filehost-meta')
 
-// Get all supported sources
-// Returns an array of hostnames
+// Get all supported hostnames
 const sources = getSources()
 
-// Get file information from page without proxy
-// Returns a File class object { name, size, views, downloads, createdAt, updatedAt }
+// Get file information from a URL
+// Returns an array of File objects: { name, size, views, downloads, createdAt, updatedAt }
 getInfo(url)
-  .then(data => {})
+  .then(files => console.log(files))
   .catch(console.error)
 
-// Get file information from page with a HTTP proxy (http://<user>:<pass>@<ip>:<port>)
-// Returns a File class object { name, size, views, downloads, createdAt, updatedAt }
-getInfo(url, { proxy })
-  .then(data => {})
+// With an HTTP proxy (http://<user>:<pass>@<ip>:<port>)
+getInfo(url, { proxy: 'http://user:pass@127.0.0.1:8080' })
+  .then(files => console.log(files))
   .catch(console.error)
 ```
 
 ## Supported Hosts
 
-- Dropmefiles
-- Files.fm
-- Filesadmin
-- Google Drive - *requires API key in env* - `GOOGLE_KEY`
-- Gofile - *requires API key in env* - `GOFILE_KEY`
-- KrakenFiles
-- Mediafire
-- Mega
-- Mixdrop
-- Pixeldrain
-- Terminal.lc
-- Uploadhaven
-- Workupload
+| Host | Domain | Notes |
+|------|--------|-------|
+| Akirabox | `akirabox.com`, `akirabox.to` | Cloudflare Turnstile (requires `xvfb` on headless Linux) |
+| Bowfile | `bowfile.com` | Shared folder support |
+| Buzzheavier | `buzzheavier.com` | |
+| Datanodes | `datanodes.to` | |
+| Download.gg | `download.gg` | French locale (Mo/Go units) |
+| Dropmefiles | `dropmefiles.com` | |
+| Files.fm | `files.fm` | |
+| Filesadmin | `filesadmin.com` | |
+| Google Drive | `drive.google.com` | Requires `GOOGLE_KEY` env var |
+| Gofile | `gofile.io` | Requires `GOFILE_KEY` env var |
+| KrakenFiles | `krakenfiles.com` | |
+| Mediafire | `mediafire.com` | |
+| Mega | `mega.nz`, `mega.co.nz` | |
+| Mixdrop | `mixdrop.co`, `mixdrop.ag`, `mixdrop.ps` | |
+| Pixeldrain | `pixeldrain.com` | |
+| Terminal.lc | `terminal.lc` | |
+| Uploadhaven | `uploadhaven.com` | |
+| ViKiNG FiLE | `vikingfile.com` | |
+| Workupload | `workupload.com` | Requires `xvfb` on headless Linux |
 
-### RIP 🥀
+## Adding a New Source
 
-- ~~Anonfiles~~ (shut down)
-- ~~Zippyshare~~ (shut down)
-- ~~Nopy~~ (shut down)
-- ~~Racaty~~ (shut down)
-- ~~Transfer.sh~~ (shut down)
+To add a new file host, create a new file in `src/sources/`. The file is auto-discovered — no registration needed.
+
+Each source must export `domains` (array of hostnames) and `get` (async function):
+
+```js
+// src/sources/example.js
+const axios = require('axios')
+const cheerio = require('cheerio')
+
+const File = require('../classes/File')
+const { proxyToAxios, sizeToBytes } = require('../utils')
+
+exports.domains = ['example.com']
+
+exports.get = async (url, proxy) => {
+  const res = await axios({
+    url,
+    ...proxyToAxios(proxy)
+  })
+
+  if (res.status !== 200) {
+    throw new Error(res.statusText)
+  }
+
+  const $ = cheerio.load(res.data)
+
+  // Extract file info from page...
+  const name = $('.filename').text().trim()
+  const size = sizeToBytes($('.filesize').text().trim())
+
+  return [
+    new File({ name, size })
+  ]
+}
+```
+
+That's it. Drop the file in `src/sources/` and it works.
 
 ## TODO
 
