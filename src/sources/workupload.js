@@ -1,18 +1,14 @@
-const { connect } = require('puppeteer-real-browser')
+const { connectBrowser } = require('../browser')
 
 const File = require('../classes/File')
 
 exports.domains = ['workupload.com']
 
 exports.get = async (url, proxy) => {
-  let browser
+  let cleanup
 
   try {
-    const connectOptions = {
-      headless: false,
-      turnstile: true,
-      disableXvfb: false,
-    }
+    const connectOptions = { turnstile: true }
 
     if (proxy) {
       const parsed = new URL(proxy)
@@ -24,8 +20,8 @@ exports.get = async (url, proxy) => {
       }
     }
 
-    const result = await connect(connectOptions)
-    browser = result.browser
+    const result = await connectBrowser(connectOptions)
+    cleanup = result.cleanup
     const page = result.page
 
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
@@ -54,8 +50,8 @@ exports.get = async (url, proxy) => {
       new File({ name: fileData.name, size: fileData.size })
     ]
   } finally {
-    if (browser) {
-      await browser.close()
+    if (cleanup) {
+      await cleanup()
     }
   }
 }
