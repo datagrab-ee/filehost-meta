@@ -26,6 +26,18 @@ exports.get = async (url, proxy) => {
 
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
 
+    // The site may show a robot/security check page that solves a proof-of-work
+    let onSecurityPage = false
+    try {
+      onSecurityPage = await page.evaluate(() => typeof window.captchaCallback !== 'undefined')
+    } catch {
+      onSecurityPage = true
+    }
+
+    if (onSecurityPage) {
+      await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 60000 })
+    }
+
     const pageContent = await page.content()
 
     if (pageContent.includes('file does not exist')) {
