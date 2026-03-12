@@ -35,10 +35,13 @@ exports.get = async (url, proxy) => {
 
   const name = $('h1.text-gray-900').first().text().trim()
     || $('h1.text-white.text-3xl').first().text().trim()
+    || $('[data-scan-file]').first().attr('data-scan-file').trim()
 
   const sizeText = $('small.text-gray-500.font-bold').first().text().trim()
+    || $('[data-scan-size]').first().attr('data-scan-size').trim()
 
   if (!name || name === 'File Not Found') {
+    console.log(res.data)
     throw new Error('File not found on datanodes')
   }
 
