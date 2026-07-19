@@ -21,12 +21,9 @@ exports.get = async (url, proxy) => {
   }
 
   const $ = cheerio.load(res.data)
-  const meta = $('.responsiveInfoTable').first().text()
 
-  const [rawName, rawSize] = meta.split(/\r?\n/).filter(x => x.trim())
-
-  const name = rawName.split(':').pop().trim()
-  const size = sizeToBytes(rawSize.split(':').pop().trim())
+  const name = $('.uh-dl-fname').first().text().trim()
+  const size = sizeToBytes($('.uh-dl-fsize').first().text().trim())
 
   return [
     new File({ name, size })
