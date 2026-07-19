@@ -25,7 +25,13 @@ exports.get = async (url, proxy) => {
     cleanup = result.cleanup
     const page = result.page
 
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
+    const navResponse = await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 })
+
+    // Guard against the browser navigating straight to a file download instead of a page
+    const contentType = navResponse?.headers()?.['content-type']
+    if (contentType && !contentType.includes('text/html')) {
+      throw new Error(`Expected "text/html" but received "${contentType}"`)
+    }
 
     // Wait for Cloudflare challenge to resolve
     const startTime = Date.now()

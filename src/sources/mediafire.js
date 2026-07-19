@@ -2,25 +2,9 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 
 const File = require('../classes/File')
-const { proxyToAxios, sizeToBytes } = require('../utils')
+const { proxyToAxios, sizeToBytes, fetchPage } = require('../utils')
 
 exports.domains = ['mediafire.com']
-
-/**
- * Some mediafire links are instant downloads which would crash HTML parsing
- * or make node run out of memory. This ensures the link returns text/html.
- */
-async function ensureHtmlResponse(url, proxy) {
-  const { headers } = await axios({
-    url,
-    method: 'head',
-    ...proxyToAxios(proxy),
-  })
-
-  if (!headers?.['content-type']?.includes('text/html')) {
-    throw new Error(`Expected "text/html" but received "${headers['content-type']}"`)
-  }
-}
 
 /**
  * Extract folder key from a MediaFire folder URL.
@@ -83,13 +67,8 @@ exports.get = async (url, proxy) => {
     return getFolderFiles(folderKey, proxy)
   }
 
-  // Single file page
-  await ensureHtmlResponse(url, proxy)
-
-  const res = await axios({
-    url,
-    ...proxyToAxios(proxy)
-  })
+  // Single file page - fetchPage guards against accidentally hitting a raw file download
+  const res = await fetchPage(url, proxy)
 
   // NOTE: mediafire does a 302 redirect if file does not exist
   if (res.status !== 200) {

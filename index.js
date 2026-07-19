@@ -1,5 +1,12 @@
 const sources = require('./src/sources')
-const { normalizeHostname } = require('./src/utils')
+const { normalizeHostname, setMaxPageBytes } = require('./src/utils')
+
+/**
+ * Override the max bytes buffered when fetching a page (default 10MB).
+ * Guards against accidentally downloading a full file instead of a page.
+ */
+exports.setMaxPageBytes = setMaxPageBytes
+
 
 /**
  * Get a flat array of all supported hostnames.

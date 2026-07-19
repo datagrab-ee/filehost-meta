@@ -1,16 +1,12 @@
-const axios = require('axios')
 const cheerio = require('cheerio')
 
 const File = require('../classes/File')
-const { proxyToAxios } = require('../utils')
+const { fetchPage } = require('../utils')
 
 exports.domains = ['files.fm']
 
 exports.get = async (url, proxy) => {
-  const res = await axios({
-    url,
-    ...proxyToAxios(proxy)
-  })
+  const res = await fetchPage(url, proxy)
 
   if (res.status !== 200) {
     throw new Error(res.statusText)

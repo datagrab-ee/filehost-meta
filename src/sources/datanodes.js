@@ -1,8 +1,7 @@
-const axios = require('axios')
 const cheerio = require('cheerio')
 
 const File = require('../classes/File')
-const { proxyToAxios, sizeToBytes } = require('../utils')
+const { sizeToBytes, fetchPage } = require('../utils')
 
 exports.domains = ['datanodes.to']
 
@@ -17,14 +16,12 @@ exports.get = async (url, proxy) => {
     throw new Error('Could not extract file code from datanodes URL')
   }
 
-  const res = await axios({
-    url: 'https://datanodes.to/download',
+  const res = await fetchPage('https://datanodes.to/download', proxy, {
     headers: {
       Cookie: `file_code=${fileCode}`,
     },
     // Don't throw on non-2xx so we can inspect the response
     validateStatus: () => true,
-    ...proxyToAxios(proxy)
   })
 
   if (res.status !== 200) {

@@ -1,15 +1,10 @@
-const axios = require('axios')
-
 const File = require('../classes/File')
-const { proxyToAxios, sizeToBytes } = require('../utils')
+const { sizeToBytes, fetchPage } = require('../utils')
 
 exports.domains = ['filesadmin.com']
 
 exports.get = async (url, proxy) => {
-  const res = await axios({
-    url,
-    ...proxyToAxios(proxy)
-  })
+  const res = await fetchPage(url, proxy)
 
   if (res.status !== 200) {
     throw new Error(res.statusText)

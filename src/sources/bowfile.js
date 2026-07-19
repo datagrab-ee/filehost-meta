@@ -2,15 +2,15 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 
 const File = require('../classes/File')
-const { proxyToAxios } = require('../utils')
+const { proxyToAxios, fetchPage } = require('../utils')
 
 exports.domains = ['bowfile.com']
 
 exports.get = async (url, proxy) => {
   const axiosProxy = proxyToAxios(proxy)
 
-  // GET the shared page to establish session cookie
-  const pageRes = await axios.get(url, { ...axiosProxy, maxRedirects: 5 })
+  // GET the shared page to establish session cookie (fetchPage guards against a raw file download)
+  const pageRes = await fetchPage(url, proxy, { maxRedirects: 5 })
   const cookies = pageRes.headers['set-cookie']?.map(c => c.split(';')[0]).join('; ')
 
   const headers = {
