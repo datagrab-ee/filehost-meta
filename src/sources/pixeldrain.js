@@ -6,7 +6,8 @@ const { proxyToAxios } = require('../utils')
 exports.domains = ['pixeldrain.com']
 
 exports.get = async (url, proxy) => {
-  const id = url.split('/').pop()
+  // Use pathname only so query strings (e.g. ?fbclid=...) can't leak into the id
+  const id = new URL(url).pathname.split('/').filter(Boolean).pop()
 
   const res = await axios({
     url: `https://pixeldrain.com/api/file/${id}/info`,

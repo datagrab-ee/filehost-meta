@@ -6,7 +6,8 @@ const { proxyToAxios, sizeToBytes } = require('../utils')
 exports.domains = ['terminal.lc']
 
 exports.get = async (url, proxy) => {
-  const id = url.split('/').pop()
+  // Use pathname only so query strings can't leak into the id
+  const id = new URL(url).pathname.split('/').filter(Boolean).pop()
 
   const res = await axios({
     method: 'post',

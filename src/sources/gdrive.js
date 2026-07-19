@@ -10,12 +10,14 @@ exports.get = async (url, proxy) => {
     throw new Error('Missing env variable "GOOGLE_KEY" for Google Drive API')
   }
 
+  const parsed = new URL(url)
   let fileId
 
-  if (url.includes('/file/d/')) {
-    fileId = url.split('/')[5]
-  } else if (url.includes('?id=')) {
-    fileId = url.split('?id=')[1].split('&')[0]
+  if (parsed.pathname.includes('/file/d/')) {
+    // Pathname only, so trailing query strings/fragments can't leak in
+    fileId = parsed.pathname.split('/file/d/')[1]?.split('/')[0]
+  } else if (parsed.searchParams.has('id')) {
+    fileId = parsed.searchParams.get('id')
   }
 
   if (!fileId) {

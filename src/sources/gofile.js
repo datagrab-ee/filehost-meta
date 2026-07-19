@@ -10,7 +10,8 @@ exports.get = async (url, proxy) => {
     throw new Error('Missing env variable "GOFILE_KEY" for Gofile API')
   }
 
-  const contentId = url.split('/d/').pop()
+  // Use pathname only so query strings can't leak into the contentId
+  const contentId = new URL(url).pathname.split('/d/').pop()
 
   const res = await axios({
     method: 'get',

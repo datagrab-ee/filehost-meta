@@ -12,7 +12,13 @@ let maxPageBytes = 10 * 1024 * 1024 // 10MB
  */
 exports.setMaxPageBytes = (bytes) => {
   maxPageBytes = bytes
+  axios.defaults.maxContentLength = maxPageBytes
+  axios.defaults.maxBodyLength = maxPageBytes
 }
+
+// Safety net: cap default request/response body size globally (overridable per-request)
+axios.defaults.maxContentLength = maxPageBytes
+axios.defaults.maxBodyLength = maxPageBytes
 
 // Log bandwidth for every axios request/response, best-effort
 axios.interceptors.response.use(
@@ -35,7 +41,6 @@ function logBandwidthFromResponse(res) {
 
   logBandwidth(res.config?.method?.toUpperCase() ?? 'GET', res.config?.url, bytes)
 }
-
 
 /**
  * Convert a proxy string to axios-compatible agent config.
