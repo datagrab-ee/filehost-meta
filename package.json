@@ -26,7 +26,7 @@
   "author": "Kristjan Kirpu <hello@pepzwee.com> (https://pepzwee.com)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/datagrab-ee/filehost-meta.git"
+    "url": "git+https://github.com/datagrab-ee/filehost-meta.git"
   },
   "license": "MIT",
   "overrides": {
