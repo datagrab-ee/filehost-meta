@@ -24,6 +24,34 @@ getInfo(url, { proxy: 'http://user:pass@127.0.0.1:8080' })
   .catch(console.error)
 ```
 
+## Debug Mode
+
+Log bandwidth used per request (where possible - not supported by `mega.js`).
+
+```js
+const { setDebug } = require('filehost-meta')
+setDebug(true)
+```
+
+## Caching
+
+Results are cached in-memory by URL (100MB max, 24h TTL) by default. Configure or disable it:
+
+```js
+const { configureCache, clearCache } = require('filehost-meta')
+
+configureCache({
+  enabled: true,       // enable/disable caching
+  maxSize: 100 * 1024 * 1024, // max total cache size in bytes
+  ttl: 24 * 60 * 60 * 1000,   // per-entry expiry in ms
+  store: 'memory',      // 'memory' or 'file'
+  filePath: '/path/to/cache' // only used when store is 'file'
+})
+
+clearCache()
+```
+
+
 ## Supported Hosts
 
 | Host | Domain | Notes |

@@ -1,5 +1,7 @@
 const sources = require('./src/sources')
 const { normalizeHostname, setMaxPageBytes } = require('./src/utils')
+const { setDebug } = require('./src/debug')
+const { configureCache, clearCache, getCached, setCached } = require('./src/cache')
 
 /**
  * Override the max bytes buffered when fetching a page (default 10MB).
@@ -7,6 +9,20 @@ const { normalizeHostname, setMaxPageBytes } = require('./src/utils')
  */
 exports.setMaxPageBytes = setMaxPageBytes
 
+/**
+ * Enable/disable debug bandwidth logging for all requests.
+ */
+exports.setDebug = setDebug
+
+/**
+ * Configure the internal URL result cache (size, ttl, enabled, store).
+ */
+exports.configureCache = configureCache
+
+/**
+ * Clear the internal URL result cache.
+ */
+exports.clearCache = clearCache
 
 /**
  * Get a flat array of all supported hostnames.
@@ -24,12 +40,17 @@ exports.getSources = function getSources() {
  * @returns {Promise<File[]>}
  */
 exports.getInfo = async function getInfo(url, options = {}) {
+  const cached = getCached(url)
+  if (cached) return cached
+
   const { hostname } = new URL(url)
   const normalized = normalizeHostname(hostname)
 
   for (const source of Object.values(sources)) {
     if (source.domains.includes(normalized)) {
-      return source.get(url, options.proxy)
+      const result = await source.get(url, options.proxy)
+      setCached(url, result)
+      return result
     }
   }
 

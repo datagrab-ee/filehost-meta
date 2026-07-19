@@ -2,6 +2,7 @@ const axios = require('axios')
 const { HttpProxyAgent } = require('http-proxy-agent')
 const { HttpsProxyAgent } = require('https-proxy-agent')
 const { convertFileSize } = require('size-converter')
+const { logBandwidth } = require('./debug')
 
 // Max bytes to buffer when fetching a "page" - override with setMaxPageBytes()
 let maxPageBytes = 10 * 1024 * 1024 // 10MB
@@ -12,6 +13,29 @@ let maxPageBytes = 10 * 1024 * 1024 // 10MB
 exports.setMaxPageBytes = (bytes) => {
   maxPageBytes = bytes
 }
+
+// Log bandwidth for every axios request/response, best-effort
+axios.interceptors.response.use(
+  (res) => {
+    logBandwidthFromResponse(res)
+    return res
+  },
+  (err) => {
+    if (err.response) logBandwidthFromResponse(err.response)
+    return Promise.reject(err)
+  }
+)
+
+// Estimate bytes transferred, preferring content-length over actual body size
+function logBandwidthFromResponse(res) {
+  const contentLength = res.headers?.['content-length']
+  const bytes = contentLength
+    ? parseInt(contentLength, 10)
+    : Buffer.byteLength(typeof res.data === 'string' ? res.data : JSON.stringify(res.data ?? ''))
+
+  logBandwidth(res.config?.method?.toUpperCase() ?? 'GET', res.config?.url, bytes)
+}
+
 
 /**
  * Convert a proxy string to axios-compatible agent config.

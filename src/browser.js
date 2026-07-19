@@ -3,6 +3,8 @@ const fs = require('fs')
 const path = require('path')
 const { execSync } = require('child_process')
 const { connect } = require('puppeteer-real-browser')
+const { isDebugEnabled, logBandwidth } = require('./debug')
+
 
 /**
  * Track all active browser sessions so we can clean them up on process exit.
@@ -54,12 +56,15 @@ exports.connectBrowser = async function connectBrowser(options = {}) {
     session = { browser, userDataDir }
     activeSessions.add(session)
 
+    const trackBandwidth = isDebugEnabled() && await attachBandwidthTracking(page)
+
     /**
      * Cleanup function: close the browser and remove the temp directory.
      * Safe to call multiple times.
      */
     const cleanup = async () => {
       activeSessions.delete(session)
+      if (trackBandwidth) trackBandwidth.report()
       try {
         if (browser) {
           await browser.close().catch(() => {})
@@ -74,6 +79,7 @@ exports.connectBrowser = async function connectBrowser(options = {}) {
     }
 
     return { browser, page, cleanup }
+
   } catch (err) {
     // If connect itself fails, make sure we still clean up
     if (session) activeSessions.delete(session)
@@ -87,8 +93,33 @@ exports.connectBrowser = async function connectBrowser(options = {}) {
 }
 
 /**
+ * Attach a CDP Network session to sum bytes transferred, best-effort.
+ * Returns { report() } to log the total, or null if attaching failed.
+ */
+async function attachBandwidthTracking(page) {
+  try {
+    const client = await page.target().createCDPSession()
+    let totalBytes = 0
+
+    await client.send('Network.enable')
+    client.on('Network.loadingFinished', (event) => {
+      totalBytes += event.encodedDataLength ?? 0
+    })
+
+    return {
+      report() {
+        logBandwidth('BROWSER', page.url(), totalBytes)
+      }
+    }
+  } catch {
+    return null
+  }
+}
+
+/**
  * Kill any Chrome processes that were launched with the given user data dir.
  */
+
 function killChromeByDataDir(userDataDir) {
   try {
     const pids = execSync(`pgrep -f "${userDataDir}"`, { encoding: 'utf-8', timeout: 5000 })
